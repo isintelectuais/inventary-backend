@@ -4,7 +4,7 @@ from typing import List
 from django.core.exceptions import PermissionDenied
 
 from . import schemas, models
-from ..auth import JWTAuth
+from apps.usuarios.authentication import JWTAuth
 
 router = Router()
 auth_router = Router(auth=JWTAuth())

@@ -2,7 +2,6 @@ from ninja import Router
 from django.shortcuts import get_object_or_404
 from typing import List
 from ninja.errors import HttpError
-
 from . import schemas, models
 from apps.usuarios.authentication import JWTAuth
 
@@ -12,7 +11,7 @@ robo_router = Router()
 
 
 # --- Rotas Autenticadas ---
-@auth_router.get("/", response=List[schemas.TrajetoriaOut])
+@auth_router.get("/lista-trajetorias", response=List[schemas.TrajetoriaOut])
 def listar_trajetorias(request, agendamento_id: int = None):
     queryset = models.Trajetoria.objects.all()
 

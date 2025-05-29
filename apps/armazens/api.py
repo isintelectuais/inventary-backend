@@ -6,7 +6,7 @@ from typing import List
 from django.http import JsonResponse
 from django.core.exceptions import PermissionDenied
 from . import schemas, models, exceptions
-from .auth import JWTAuth
+from apps.usuarios.authentication import JWTAuth
 
 # Criação dos roteadores principais
 router = Router()  # Rotas públicas
@@ -40,7 +40,7 @@ def criar_armazem(request, payload: schemas.ArmazemIn):
         }
 
         for campo, valor in campos_obrigatorios.items():
-            if valor is None or (isinstance(valor, str) and not valor.strip():
+            if valor is None or (isinstance(valor, str) and not valor.strip()):
                 return JsonResponse({"error": f"O campo {campo} não pode estar vazio"}, status=400)
 
         armazem = models.Armazem.objects.create(**payload.dict())

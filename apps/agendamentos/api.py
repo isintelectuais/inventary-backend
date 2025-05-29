@@ -5,9 +5,8 @@ from typing import List
 from datetime import datetime, timedelta
 from ninja.errors import HttpError
 from django.core.exceptions import PermissionDenied, ValidationError
-
 from . import schemas, models
-from usuarios.authentication import JWTAuth
+from apps.usuarios.authentication import JWTAuth
 from .utils import calcular_percentuais
 
 router = Router()

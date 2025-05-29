@@ -1,9 +1,9 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils import timezone
-from usuarios.models import Usuario
-from robos.models import Robo
-from armazens.models import Armazem
+from apps.usuarios.models import Usuario
+from apps.robos.models import Robo
+from apps.armazens.models import Armazem
 
 
 class Agendamento(models.Model):

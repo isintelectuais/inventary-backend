@@ -1,6 +1,6 @@
 from django.db import models
-from robos.models import Robo
-from agendamentos.models import Agendamento
+from apps.robos.models import Robo
+from apps.agendamentos.models import Agendamento
 
 class ImagemCapturada(models.Model):
     robo = models.ForeignKey(Robo, on_delete=models.CASCADE, related_name='imagens')

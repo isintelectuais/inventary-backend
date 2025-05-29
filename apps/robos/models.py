@@ -1,6 +1,6 @@
 from django.db import models
-from armazens.models import Armazem
-from usuarios.models import Usuario
+from apps.armazens.models import Armazem
+from apps.usuarios.models import Usuario
 
 
 class Robo(models.Model):
