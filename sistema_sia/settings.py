@@ -97,12 +97,24 @@ TEMPLATES = [
 WSGI_APPLICATION = 'sistema_sia.wsgi.application'
 
 # Banco de Dados
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv("POSTGRES_DB", "sistema_sia"),
+        'USER': os.getenv("POSTGRES_USER", "dev_user"),
+        'PASSWORD': os.getenv("POSTGRES_PASSWORD", "9115An"),
+        'HOST': os.getenv("POSTGRES_HOST", "localhost"),
+        'PORT': os.getenv("POSTGRES_PORT", "5432"),
     }
 }
+
 
 # Validação de senha
 AUTH_PASSWORD_VALIDATORS = [
