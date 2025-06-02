@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 
-
 class UsuarioManager(BaseUserManager):
     def create_user(self, email, password=None, matricula=None, tipo="Usuario", **extra_fields):
         if not email:

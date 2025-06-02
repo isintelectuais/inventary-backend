@@ -38,7 +38,7 @@ O sistema foi desenvolvido para gerenciar de forma modular e escalável os segui
 - **Python 3**
 - **Django**
 - **Django Ninja** – APIs REST rápidas e tipadas
-- **SQLite** – Banco de dados leve e embutido
+- **Postgresql** – Banco de dados leve e embutido
 - **(Em breve)** Docker para containerização
 
 ---

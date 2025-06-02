@@ -60,7 +60,40 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'apps.usuarios.middleware.JWTAuthenticationMiddleware',
+    'apps.usuarios.middleware.logging_middleware.ActionLoggingMiddleware'
 ]
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{asctime} | {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'action_log_file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': BASE_DIR / 'logs/actions.log',
+            'maxBytes': 1024 * 1024 * 5,
+            'backupCount': 5,
+            'formatter': 'simple',
+        },
+    },
+    'loggers': {
+        'action_logger': {
+            'handlers': ['action_log_file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
+}
 
 CORS_ALLOW_HEADERS = [
     'content-type',
