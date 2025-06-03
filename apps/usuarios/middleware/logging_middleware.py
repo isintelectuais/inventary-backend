@@ -23,6 +23,6 @@ class ActionLoggingMiddleware:
                 "status_code": response.status_code,
             }
 
-            action_logger.info(json.dumps((log_data))
+            action_logger.info(json.dumps((log_data)))
 
         return response

@@ -6,10 +6,11 @@ from dotenv import load_dotenv
 # Caminho base do projeto
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv()
+
+# Configurações básicas
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "django-insecure-5)_8fwz!g!e3v%yl8jei1fy$vmz_&k7x1&-gyyz96253u65+px")
 DEBUG = os.getenv("DEBUG", "True") == "True"
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
-
 
 # Aplicações instaladas
 INSTALLED_APPS = [
@@ -60,8 +61,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'apps.usuarios.middleware.JWTAuthenticationMiddleware',
-    'apps.usuarios.middleware.logging_middleware.ActionLoggingMiddleware'
+    #'apps.usuarios.middleware.logging_middleware.ActionLoggingMiddleware'
 ]
+
+# Configuração de logging
+LOG_DIR = BASE_DIR / 'middleware'
+
+if not LOG_DIR.exists():
+    LOG_DIR.mkdir(parents=True, exist_ok=True)
+    print(f"Diretório de logs criado: {LOG_DIR}")
 
 LOGGING = {
     'version': 1,
@@ -80,27 +88,42 @@ LOGGING = {
         'action_log_file': {
             'level': 'INFO',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': BASE_DIR / 'logs/actions.log',
+            'filename': LOG_DIR / 'actions.log',
             'maxBytes': 1024 * 1024 * 5,
             'backupCount': 5,
             'formatter': 'simple',
         },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
     },
     'loggers': {
-        'action_logger': {
-            'handlers': ['action_log_file'],
+        'apps.usuarios.middleware.logging_middleware': {
+            'handlers': ['action_log_file', 'console'],
             'level': 'INFO',
             'propagate': False,
+        },
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        '': {
+            'handlers': ['console'],
+            'level': 'WARNING',
+            'propagate': True,
         },
     },
 }
 
+# Configurações CORS
 CORS_ALLOW_HEADERS = [
     'content-type',
     'authorization',
     'x-csrftoken',
 ]
-
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:8000',
@@ -130,13 +153,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'sistema_sia.wsgi.application'
 
 # Banco de Dados
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -148,7 +164,6 @@ DATABASES = {
     }
 }
 
-
 # Validação de senha
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
@@ -157,6 +172,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
+# Configurações do REST Framework
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'ninja_jwt.authentication.JWTAuthentication',
@@ -165,13 +181,14 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
 }
-# Garanta que está usando a mesma chave em todos os lugares
+
+# Configurações JWT
 SIMPLE_JWT = {
     'ALGORITHM': 'HS256',
     'SIGNING_KEY': '3qqWbEwBvZH7MWKWejsc7BIWL8ENFJsF-4h_vF2gxTAV2T06vzVYle5a6ZwBXbdVzr8',
     'VERIFYING_KEY': None,
 }
-# Configurações JWT customizadas
+
 NINJA_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=2),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
@@ -182,21 +199,19 @@ NINJA_JWT = {
     'USER_ID_CLAIM': 'user_id',
 }
 
-# Configuração de autenticação padrão
+# Autenticação
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-# Modelo de usuário customizado
 AUTH_USER_MODEL = 'usuarios.Usuario'
 
+# Internacionalização
 LANGUAGE_CODE = 'pt-br'
 TIME_ZONE = 'America/Sao_Paulo'
 USE_I18N = True
 USE_TZ = True
 
-
+# Arquivos estáticos
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
-
-
