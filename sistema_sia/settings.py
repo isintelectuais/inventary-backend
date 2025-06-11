@@ -127,6 +127,8 @@ CORS_ALLOW_HEADERS = [
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:8000',
+    'http://127.0.0.1:8000'
+
 ]
 
 # Configuração de URLs
@@ -156,11 +158,14 @@ WSGI_APPLICATION = 'sistema_sia.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv("POSTGRES_DB", "sistema_sia"),
-        'USER': os.getenv("POSTGRES_USER", "dev_user"),
-        'PASSWORD': os.getenv("POSTGRES_PASSWORD", "9115An"),
-        'HOST': os.getenv("POSTGRES_HOST", "localhost"),
+        'NAME': os.getenv("POSTGRES_DB", "neondb"),
+        'USER': os.getenv("POSTGRES_USER", "neondb_owner"),
+        'PASSWORD': os.getenv("POSTGRES_PASSWORD", "npg_n18ArKMGcyCx"),
+        'HOST': os.getenv("POSTGRES_HOST", "ep-morning-fog-a8kvrvni-pooler.eastus2.azure.neon.tech"),
         'PORT': os.getenv("POSTGRES_PORT", "5432"),
+        'OPTIONS': {
+            'sslmode': 'require',
+        },
     }
 }
 
