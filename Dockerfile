@@ -1,28 +1,22 @@
-# Imagem base com Python
-FROM python:3.12-slim
+FROM python:3.12
 
-# Variáveis de ambiente
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
-# Diretório de trabalho no container
 WORKDIR /app
 
-# Atualiza os pacotes e instala dependências do sistema
+# Adicionando as dependências necessárias para compilar psycopg2
 RUN apt-get update && apt-get install -y \
-    build-essential \
-    libpq-dev \
     gcc \
+    libpq-dev \
+    build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-# Copia os arquivos de dependências
 COPY requirements.txt .
 
-# Instala dependências do projeto
-RUN pip install --upgrade pip && pip install -r requirements.txt
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
 
-# Copia o restante dos arquivos do projeto
 COPY . .
 
-# Comando para rodar as migrações e iniciar o servidor (substitua conforme necessário)
-CMD ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
+CMD gunicorn sistema_sia.wsgi --bind 0.0.0.0:8000
