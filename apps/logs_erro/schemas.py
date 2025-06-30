@@ -2,6 +2,7 @@ from datetime import datetime
 from typing import Optional
 from ninja import Schema
 from ninja.orm import create_schema
+from .models import LogErro
 
 class LogErroCreate(Schema):
     mensagem: str

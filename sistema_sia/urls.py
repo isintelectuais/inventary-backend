@@ -23,6 +23,10 @@ from apps.imagens.api import router as imagens_router
 from apps.inventario.api import router as inventario_router
 from apps.robos.api import router as robos_router
 from apps.trajetorias.api import router as trajetorias_router
+from apps.logs_erro.api import log_router
+from apps.api_client.api import api as api_cliente_router
+
+
 api = NinjaAPI(title="Sistema de Inventário de Armazém")
 api.add_router("/armazens/", armazens_router)
 api.add_router("/usuarios", usuarios_router)
@@ -30,6 +34,8 @@ api.add_router("/imagens/", imagens_router)
 api.add_router("/inventario/", inventario_router)
 api.add_router("/robos/", robos_router)
 api.add_router("/trajetorias/", trajetorias_router)
+api.add_router("/logs", log_router)
+api.add_router("/api-client/", api_cliente_router)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

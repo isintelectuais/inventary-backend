@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'apps.agendamentos',
     'apps.imagens',
     'apps.trajetorias',
+    "apps.api_client"
 ]
 
 # Configuração do ASGI
@@ -161,13 +162,15 @@ DATABASES = {
         'NAME': os.getenv("POSTGRES_DB", "neondb"),
         'USER': os.getenv("POSTGRES_USER", "neondb_owner"),
         'PASSWORD': os.getenv("POSTGRES_PASSWORD", "npg_n18ArKMGcyCx"),
-        'HOST': os.getenv("POSTGRES_HOST", "ep-morning-fog-a8kvrvni-pooler.eastus2.azure.neon.tech"),
+        'HOST': os.getenv("POSTGRES_HOST", "ep-morning-fog-a8kvrvni.eastus2.azure.neon.tech"),
         'PORT': os.getenv("POSTGRES_PORT", "5432"),
         'OPTIONS': {
             'sslmode': 'require',
         },
     }
 }
+
+
 
 # Validação de senha
 AUTH_PASSWORD_VALIDATORS = [
