@@ -13,7 +13,7 @@ from .schemas import (
     ApiChecklistSchema
 )
 from .services import processar_webhook
-from apps.usuarios.authentication import JWTAuth  # sua autenticação personalizada
+from apps.usuarios.authentication import JWTAuth
 
 api = Router(tags=["WMS API"])
 
