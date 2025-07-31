@@ -152,6 +152,11 @@ TEMPLATES = [
     },
 ]
 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
 # WSGI Application
 WSGI_APPLICATION = 'sistema_sia.wsgi.application'
 
